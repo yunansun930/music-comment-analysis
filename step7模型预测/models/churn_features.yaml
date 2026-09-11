@@ -1,0 +1,26 @@
+# 用户流失预测特征清单（共 24 个）
+
+1. comment_count_total
+2. reply_count_total
+3. like_received_total
+4. activity_score
+5. interaction_score
+6. diversity_score
+7. user_value
+8. avg_sentiment
+9. preferred_topic_id
+10. active_days
+11. avg_comment_length
+12. frequency
+13. monetary
+14. f_score
+15. m_score
+16. register_days
+17. active_period_encoded
+18. sentiment_type_encoded
+19. comment_per_active_day
+20. like_per_active_day
+21. engagement_ratio
+22. activity_consistency
+23. reply_to_comment_ratio
+24. like_to_reply_ratio

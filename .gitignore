@@ -1,0 +1,36 @@
+# --- 环境与密钥 ---
+.env
+.env.local
+
+# --- Python 缓存 ---
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# --- IDE ---
+.vscode/
+.idea/
+
+# --- 大数据文件（超 GitHub 推荐上限，从爬虫生成） ---
+step1数据采集/data/fact_behavior.csv
+step1数据采集/data/fact_comment.csv
+step1数据采集/data/dim_user.csv
+step1数据采集/data/dim_song.csv
+step1数据采集/data/dim_artist.csv
+
+# --- 大型生成的 HTML（可由脚本重新生成） ---
+dashboard.html
+展示.html
+
+# --- 模型 pkl 文件（可由训练脚本重新生成） ---
+step7模型预测/models/*.pkl
+
+# --- Office 临时文件 ---
+~$*
+
+# --- OS 杂项 ---
+.DS_Store
+Thumbs.db

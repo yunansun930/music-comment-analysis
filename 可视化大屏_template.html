@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>音乐评论用户行为分析 - 数据大屏</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+body {
+  background: #f5efe6;
+  color: #5a4a3a;
+  font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+}
+#screen {
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px;
+  gap: 8px;
+}
+.header {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #8b6b4d;
+  flex-shrink: 0;
+}
+.header h1 { font-size: 26px; font-weight: 700; color: #8b6b4d; letter-spacing: 4px; }
+.header .sub { font-size: 11px; color: #9a8a7a; letter-spacing: 2px; }
+.header .date { font-size: 13px; color: #9a8a7a; }
+
+.kpi-row {
+  height: 70px;
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.kpi {
+  flex: 1;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(139,107,77,0.25);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+.kpi::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #8b6b4d, transparent);
+}
+.kpi .num { font-size: 24px; font-weight: 700; color: #8b6b4d; }
+.kpi .label { font-size: 11px; color: #9a8a7a; }
+
+.main {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  min-height: 0;
+}
+.col { flex: 1; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.col-center { flex: 1.8; }
+
+.card {
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(139,107,77,0.25);
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+}
+.card-title {
+  font-size: 12px;
+  color: #8b6b4d;
+  font-weight: 600;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.card-title::before {
+  content: '';
+  width: 3px; height: 12px;
+  background: #8b6b4d;
+  border-radius: 2px;
+}
+.chart-box { flex: 1; min-height: 0; width: 100%; }
+
+.bottom-row {
+  height: 180px;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.bottom-row .card { flex: 1; }
+
+.stat-list { display: flex; flex-direction: column; gap: 4px; padding: 4px; }
+.stat-item {
+  background: rgba(255,255,255,0.4);
+  border-left: 3px solid #8b6b4d;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 10px;
+}
+.stat-item .st-name { color: #5a4a3a; font-weight: 600; }
+.stat-item .st-val { color: #9a8a7a; }
+.stat-item .st-p { color: #8b6b4d; font-weight: 700; }
+
+.ab-grid { display: flex; gap: 4px; padding: 4px; }
+.ab-metric {
+  flex: 1;
+  text-align: center;
+  padding: 4px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 4px;
+}
+.ab-metric .ab-v { font-size: 14px; color: #8b6b4d; font-weight: 700; }
+.ab-metric .ab-l { font-size: 9px; color: #9a8a7a; }
+</style>
+</head>
+<body>
+<div id="screen">
+  <div class="header">
+    <div>
+      <h1>音乐评论用户行为分析数据大屏</h1>
+      <div class="sub">DATA VISUALIZATION DASHBOARD</div>
+    </div>
+    <div class="date" id="dateNow"></div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="num" id="kpi1">-</div><div class="label">采集歌曲数</div></div>
+    <div class="kpi"><div class="num" id="kpi2">-</div><div class="label">覆盖用户数</div></div>
+    <div class="kpi"><div class="num" id="kpi3">-</div><div class="label">清洗后评论数</div></div>
+    <div class="kpi"><div class="num" id="kpi4">-</div><div class="label">总点赞数</div></div>
+  </div>
+
+  <div class="main">
+    <div class="col">
+      <div class="card"><div class="card-title">热度 Top 10 歌曲</div><div class="chart-box" id="c1"></div></div>
+      <div class="card"><div class="card-title">用户分群 K-means</div><div class="chart-box" id="c2"></div></div>
+      <div class="card"><div class="card-title">RFM 用户分层</div><div class="chart-box" id="c3"></div></div>
+    </div>
+    <div class="col col-center">
+      <div class="card"><div class="card-title">30 天评论趋势</div><div class="chart-box" id="c4"></div></div>
+      <div class="card" style="flex:1.3"><div class="card-title">24 小时活跃热力</div><div class="chart-box" id="c5"></div></div>
+      <div class="card"><div class="card-title">歌手互动量 Top 5</div><div class="chart-box" id="c6"></div></div>
+    </div>
+    <div class="col">
+      <div class="card"><div class="card-title">情感分析</div><div class="chart-box" id="c7"></div></div>
+      <div class="card"><div class="card-title">爆款预测模型对比</div><div class="chart-box" id="c8"></div></div>
+      <div class="card"><div class="card-title">流失风险分布</div><div class="chart-box" id="c9"></div></div>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="card"><div class="card-title">特征重要性 Top 8</div><div class="chart-box" id="c10"></div></div>
+    <div class="card"><div class="card-title">同期群留存曲线</div><div class="chart-box" id="c11"></div></div>
+    <div class="card">
+      <div class="card-title">统计检验 & A/B 实验</div>
+      <div class="stat-list" id="stat-list"></div>
+      <div class="ab-grid" id="ab-grid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var DATA = __DATA__;
+
+function fitScreen() {
+  var sw = window.innerWidth, sh = window.innerHeight;
+  var scale = Math.min(sw / 1920, sh / 1080);
+  var s = document.getElementById('screen');
+  s.style.transform = 'scale(' + scale + ')';
+  s.style.left = ((sw - 1920 * scale) / 2) + 'px';
+  s.style.top = ((sh - 1080 * scale) / 2) + 'px';
+}
+fitScreen();
+window.onresize = fitScreen;
+
+window.addEventListener('load', function() {
+  document.getElementById('dateNow').textContent = new Date().toLocaleString('zh-CN');
+  document.getElementById('kpi1').textContent = DATA.song_count;
+  document.getElementById('kpi2').textContent = DATA.user_count.toLocaleString();
+  document.getElementById('kpi3').textContent = DATA.comment_count.toLocaleString();
+  document.getElementById('kpi4').textContent = (DATA.total_likes / 10000).toFixed(0) + '万';
+
+  var TC = '#9a8a7a';
+  var TX = '#5a4a3a';
+  var GOLD = '#8b6b4d';
+  var GREEN = '#5a7d6b';
+  var RED = '#c0392b';
+  var TT = { backgroundColor: 'rgba(255,250,245,0.95)', borderColor: GOLD, textStyle: { color: TX } };
+  var SL = { lineStyle: { color: 'rgba(139,107,77,0.08)' } };
+  var AL = { lineStyle: { color: 'rgba(139,107,77,0.3)' } };
+
+  function mk(id, opt) {
+    var el = document.getElementById(id);
+    if (!el) { console.error('No element:', id); return; }
+    var c = echarts.init(el);
+    c.setOption(opt);
+    window.addEventListener('resize', function() { c.resize(); });
+    return c;
+  }
+
+  // 1. Hot songs
+  var hotNames = DATA.hot_songs.map(function(s) { return s.song_name; });
+  var hotScores = DATA.hot_songs.map(function(s) { return parseFloat(s.heat_score); });
+  mk('c1', {
+    grid: { left: 65, right: 25, top: 8, bottom: 15 },
+    xAxis: { type: 'value', axisLabel: { color: TC, fontSize: 9 }, splitLine: SL },
+    yAxis: { type: 'category', data: hotNames.reverse(), axisLabel: { color: TX, fontSize: 10 }, axisLine: AL },
+    series: [{ type: 'bar', data: hotScores.reverse(), barWidth: 10,
+      itemStyle: { color: { type: 'linear', x: 0, y: 0, x2: 1, y2: 0,
+        colorStops: [{ offset: 0, color: 'rgba(139,107,77,0.15)' }, { offset: 1, color: GOLD }] }, borderRadius: 3 } }],
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } }
+  });
+
+  // 2. K-means
+  mk('c2', {
+    series: [{ type: 'pie', radius: ['35%', '60%'], center: ['50%', '52%'],
+      data: DATA.kmeans_clusters.map(function(c, i) {
+        return { value: c.user_count, name: c.user_type + ' ' + c.pct + '%',
+          itemStyle: { color: [GOLD, GREEN, RED, '#7a8b6f'][i] } };
+      }),
+      label: { color: TX, fontSize: 9 },
+      itemStyle: { borderColor: '#f5efe6', borderWidth: 2 }
+    }],
+    tooltip: { trigger: 'item' }
+  });
+
+  // 3. RFM
+  mk('c3', {
+    grid: { left: 45, right: 15, top: 8, bottom: 18 },
+    xAxis: { type: 'category', data: DATA.rfm_dist.map(function(r) { return r.rfm_label; }),
+      axisLabel: { color: TX, fontSize: 8, rotate: 15 }, axisLine: AL },
+    yAxis: { type: 'value', axisLabel: { color: TC, fontSize: 8 }, splitLine: SL },
+    series: [{ type: 'bar', data: DATA.rfm_dist.map(function(r) { return r.user_count; }),
+      barWidth: 18, itemStyle: { color: GREEN, borderRadius: 4 },
+      label: { show: true, position: 'top', color: TX, fontSize: 8,
+        formatter: function(p) { return p.value > 1000 ? (p.value/1000).toFixed(1)+'k' : p.value; } } }],
+    tooltip: { trigger: 'axis' }
+  });
+
+  // 4. 30-day trend
+  mk('c4', {
+    grid: { left: 45, right: 15, top: 15, bottom: 22 },
+    xAxis: { type: 'category', data: DATA.trend_30d.map(function(t) { return t.d.substring(5); }),
+      axisLabel: { color: TC, fontSize: 8, interval: 4 }, axisLine: AL },
+    yAxis: { type: 'value', axisLabel: { color: TC, fontSize: 8 }, splitLine: SL },
+    series: [{ type: 'line', data: DATA.trend_30d.map(function(t) { return t.c; }),
+      smooth: true, symbol: 'none',
+      lineStyle: { color: GOLD, width: 2 },
+      areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+        colorStops: [{ offset: 0, color: 'rgba(139,107,77,0.25)' }, { offset: 1, color: 'rgba(139,107,77,0)' }] } } }],
+    tooltip: { trigger: 'axis' }
+  });
+
+  // 5. Hourly
+  mk('c5', {
+    grid: { left: 45, right: 15, top: 15, bottom: 22 },
+    xAxis: { type: 'category', data: DATA.hourly.map(function(h) { return h.hour + ':00'; }),
+      axisLabel: { color: TC, fontSize: 8, interval: 2 }, axisLine: AL },
+    yAxis: { type: 'value', axisLabel: { color: TC, fontSize: 8 }, splitLine: SL },
+    series: [{ type: 'bar', data: DATA.hourly.map(function(h) { return h.comment_count; }),
+      barWidth: 7,
+      itemStyle: { color: function(p) {
+        var h = DATA.hourly[p.dataIndex].hour;
+        if (h >= 14 && h <= 16) return GOLD;
+        if (h >= 11 && h <= 18) return GREEN;
+        return 'rgba(139,107,77,0.25)';
+      }, borderRadius: 3 } }],
+    tooltip: { trigger: 'axis' }
+  });
+
+  // 6. Artists
+  mk('c6', {
+    grid: { left: 55, right: 25, top: 8, bottom: 18 },
+    xAxis: { type: 'category', data: DATA.top_artists.map(function(a) { return a.artist_name; }),
+      axisLabel: { color: TX, fontSize: 10 }, axisLine: AL },
+    yAxis: { type: 'value', name: '万赞', nameTextStyle: { color: TC, fontSize: 8 },
+      axisLabel: { color: TC, fontSize: 8 }, splitLine: SL },
+    series: [{ type: 'bar', data: DATA.top_artists.map(function(a) { return parseInt(a.likes) / 10000; }),
+      barWidth: 22,
+      itemStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+        colorStops: [{ offset: 0, color: GOLD }, { offset: 1, color: 'rgba(139,107,77,0.15)' }] }, borderRadius: [4,4,0,0] },
+      label: { show: true, position: 'top', color: TX, fontSize: 8, formatter: '{c}万' } }],
+    tooltip: { trigger: 'axis' }
+  });
+
+  // 7. Sentiment
+  var ss = DATA.sentiment_summary;
+  mk('c7', {
+    series: [{ type: 'pie', radius: ['40%', '65%'], center: ['50%', '52%'],
+      data: [
+        { value: parseFloat(ss.positive_ratio) * 100, name: '正面', itemStyle: { color: GREEN } },
+        { value: parseFloat(ss.neutral_ratio) * 100, name: '中性', itemStyle: { color: GOLD } },
+        { value: parseFloat(ss.negative_ratio) * 100, name: '负面', itemStyle: { color: RED } }
+      ],
+      label: { color: TX, fontSize: 9, formatter: '{b} {d}%' },
+      itemStyle: { borderColor: '#f5efe6', borderWidth: 2 }
+    }],
+    tooltip: { trigger: 'item' }
+  });
+
+  // 8. Model metrics
+  mk('c8', {
+    grid: { left: 40, right: 15, top: 15, bottom: 22 },
+    xAxis: { type: 'category', data: ['LR', 'RF', 'XGB'],
+      axisLabel: { color: TX, fontSize: 10 }, axisLine: AL },
+    yAxis: { type: 'value', min: 0.7, max: 1.0,
+      axisLabel: { color: TC, fontSize: 8 }, splitLine: SL },
+    series: [{ type: 'bar', data: DATA.model_metrics.map(function(m) { return m.auc; }),
+      barWidth: 25,
+      itemStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+        colorStops: [{ offset: 0, color: GOLD }, { offset: 1, color: 'rgba(139,107,77,0.2)' }] }, borderRadius: 4 },
+      label: { show: true, position: 'top', color: TX, fontSize: 8,
+        formatter: function(p) { return p.value.toFixed(3); } }
+    }],
+    tooltip: { trigger: 'axis',
+      formatter: function(p) {
+        var m = DATA.model_metrics[p[0].dataIndex];
+        return m.model_name + '<br/>AUC: ' + m.auc.toFixed(4) + ' (±' + m.auc_std.toFixed(4) + ')';
+      }
+    }
+  });
+
+  // 9. Churn risk
+  mk('c9', {
+    series: [{ type: 'pie', radius: ['35%', '60%'], center: ['50%', '52%'],
+      data: DATA.churn_risk.map(function(c) {
+        var cm = { '高': RED, '中': GOLD, '低': GREEN };
+        return { value: c.user_count, name: c.risk_level + '风险',
+          itemStyle: { color: cm[c.risk_level] || GOLD } };
+      }),
+      label: { color: TX, fontSize: 9, formatter: '{b}\n{d}%' },
+      itemStyle: { borderColor: '#f5efe6', borderWidth: 2 }
+    }],
+    tooltip: { trigger: 'item' }
+  });
+
+  // 10. Feature importance
+  mk('c10', {
+    grid: { left: 95, right: 25, top: 5, bottom: 12 },
+    xAxis: { type: 'value', axisLabel: { color: TC, fontSize: 8 }, splitLine: SL },
+    yAxis: { type: 'category',
+      data: DATA.feature_importance.map(function(f) { return f.feature; }).reverse(),
+      axisLabel: { color: TX, fontSize: 9 }, axisLine: AL },
+    series: [{ type: 'bar',
+      data: DATA.feature_importance.map(function(f) { return f.importance * 100; }).reverse(),
+      barWidth: 8,
+      itemStyle: { color: function(p) { return p.dataIndex >= 5 ? GREEN : GOLD; }, borderRadius: 3 } }],
+    tooltip: { trigger: 'axis' }
+  });
+
+  // 11. Cohort
+  mk('c11', {
+    grid: { left: 40, right: 15, top: 10, bottom: 18 },
+    xAxis: { type: 'category', data: DATA.cohort.map(function(c) { return 'W' + c.week_offset; }),
+      axisLabel: { color: TX, fontSize: 9 }, axisLine: AL },
+    yAxis: { type: 'value', axisLabel: { color: TC, fontSize: 8, formatter: '{value}%' }, splitLine: SL },
+    series: [{ type: 'line', data: DATA.cohort.map(function(c) { return parseFloat(c.avg_retention); }),
+      smooth: true, symbol: 'circle', symbolSize: 5,
+      lineStyle: { color: GOLD, width: 2 },
+      itemStyle: { color: GOLD },
+      areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+        colorStops: [{ offset: 0, color: 'rgba(139,107,77,0.2)' }, { offset: 1, color: 'rgba(139,107,77,0)' }] } } }],
+    tooltip: { trigger: 'axis' }
+  });
+
+  // 12. Stat tests + AB
+  var sl = document.getElementById('stat-list');
+  var h = '';
+  DATA.stat_tests.forEach(function(st) {
+    h += '<div class="stat-item"><span class="st-name">' + st.test_name + '</span> <span class="st-val">' + st.test_type + ' d=' + parseFloat(st.effect_size).toFixed(3) + '</span> <span class="st-p">p=' + (parseFloat(st.p_value) < 0.0001 ? '<0.0001' : parseFloat(st.p_value).toFixed(4)) + '</span></div>';
+  });
+  sl.innerHTML = h;
+
+  var ab = DATA.ab_test;
+  var ag = document.getElementById('ab-grid');
+  ag.innerHTML =
+    '<div class="ab-metric"><div class="ab-v">+' + (parseFloat(ab.lift_ratio) * 100).toFixed(1) + '%</div><div class="ab-l">提升幅度</div></div>' +
+    '<div class="ab-metric"><div class="ab-v">p=' + parseFloat(ab.p_value).toFixed(3) + '</div><div class="ab-l">显著性</div></div>' +
+    '<div class="ab-metric"><div class="ab-v">' + parseFloat(ab.effect_size).toFixed(3) + '</div><div class="ab-l">效应量(d)</div></div>' +
+    '<div class="ab-metric"><div class="ab-v">[' + (parseFloat(ab.ci_lower) * 100).toFixed(1) + '%,' + (parseFloat(ab.ci_upper) * 100).toFixed(1) + '%]</div><div class="ab-l">95% CI</div></div>';
+});
+</script>
+</body>
+</html>

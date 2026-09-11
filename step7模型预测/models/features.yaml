@@ -1,0 +1,22 @@
+# 爆款预测模型特征清单（基于真实评论数据）
+# 共 19 个特征
+
+1. total_reply_count
+2. artist_comment_count
+3. artist_reply_count
+4. artist_like_total
+5. negative_ratio
+6. valid_comment_count
+7. topic_count
+8. release_year
+9. release_month
+10. days_since_release
+11. artist_song_count
+12. artist_avg_comment_per_song
+13. artist_avg_like_per_song
+14. comment_trend_slope
+15. like_trend_slope
+16. heat_trend_slope
+17. comment_volatility
+18. comment_momentum
+19. like_momentum

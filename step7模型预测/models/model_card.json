@@ -1,0 +1,23 @@
+{
+  "task": "爆款歌曲二分类预测（基于真实评论数据）",
+  "label_definition": "复合热度(评论数+获赞数+正面情感加权) Top 10%",
+  "best_model": "RandomForest",
+  "best_auc_cv_mean": 0.882801268498943,
+  "best_auc_cv_std": 0.04570807411475201,
+  "best_auc_holdout": 0.8858024691358025,
+  "best_pr_auc": 0.6051587301587301,
+  "auc_ci_95": [
+    0.719166947439353,
+    0.9915347035040432
+  ],
+  "cv_method": "StratifiedKFold(n_splits=5, shuffle=True)",
+  "ci_method": "Bootstrap(n=500)",
+  "imbalance_handling": "class_weight=balanced / scale_pos_weight",
+  "hyperparameter_tuning": "RandomizedSearchCV(n_iter=30, 7 params, scoring=roc_auc)",
+  "feature_count": 19,
+  "metrics_file": "metrics.json",
+  "features_file": "features.yaml",
+  "model_file": "best_hot_song_model.pkl",
+  "scaler_file": "scaler.pkl",
+  "note": "基于真实评论指标：评论数、回复数、获赞数、热度分、情感、主题等"
+}

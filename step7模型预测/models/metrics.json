@@ -1,0 +1,48 @@
+{
+  "best_model": "RandomForest",
+  "best_auc": 0.882801268498943,
+  "all_metrics": [
+    {
+      "model_name": "LogisticRegression",
+      "auc": 0.8750528541226215,
+      "auc_std": 0.09214189428521924,
+      "auc_holdout": 0.9537037037037037,
+      "pr_auc": 0.7096611721611721,
+      "f1": 0.6,
+      "accuracy": 0.8666666666666667,
+      "auc_ci_lower": 0.8977086038961039,
+      "auc_ci_upper": 1.0
+    },
+    {
+      "model_name": "RandomForest",
+      "auc": 0.882801268498943,
+      "auc_std": 0.04570807411475201,
+      "auc_holdout": 0.8858024691358025,
+      "pr_auc": 0.6051587301587301,
+      "f1": 0.5,
+      "accuracy": 0.9333333333333333,
+      "auc_ci_lower": 0.719166947439353,
+      "auc_ci_upper": 0.9915347035040432
+    },
+    {
+      "model_name": "XGBoost",
+      "auc": 0.8817653276955604,
+      "auc_std": 0.07299481555340906,
+      "auc_holdout": 0.9506172839506173,
+      "pr_auc": 0.6908730158730158,
+      "f1": 0.6,
+      "accuracy": 0.9333333333333333,
+      "auc_ci_lower": 0.870946233508299,
+      "auc_ci_upper": 1.0
+    }
+  ],
+  "xgb_params": {
+    "subsample": 0.9,
+    "n_estimators": 300,
+    "min_child_weight": 7,
+    "max_depth": 5,
+    "learning_rate": 0.2,
+    "gamma": 0.3,
+    "colsample_bytree": 0.9
+  }
+}

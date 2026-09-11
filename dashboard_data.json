@@ -1,0 +1,771 @@
+{
+  "song_count": 300,
+  "user_count": 22916,
+  "comment_count": 215853,
+  "artist_count": 25,
+  "total_likes": 54129770,
+  "total_replies": 0,
+  "interaction_rate": 25077.15,
+  "hot_songs": [
+    {
+      "song_id": 1839172965,
+      "heat_rank": 1,
+      "heat_score": "0.8974",
+      "comment_count": 353,
+      "like_total": 1898,
+      "lifecycle_stage": "爆发期",
+      "song_name": "放过",
+      "artist_name": "马頔"
+    },
+    {
+      "song_id": 2750152394,
+      "heat_rank": 1,
+      "heat_score": "0.8511",
+      "comment_count": 248,
+      "like_total": 1208,
+      "lifecycle_stage": "爆发期",
+      "song_name": "再见",
+      "artist_name": "马頔"
+    },
+    {
+      "song_id": 1971797168,
+      "heat_rank": 1,
+      "heat_score": "0.8367",
+      "comment_count": 192,
+      "like_total": 1734,
+      "lifecycle_stage": "爆发期",
+      "song_name": "人间世",
+      "artist_name": "马頔"
+    },
+    {
+      "song_id": 1357999894,
+      "heat_rank": 1,
+      "heat_score": "0.8340",
+      "comment_count": 177,
+      "like_total": 2082,
+      "lifecycle_stage": "爆发期",
+      "song_name": "归去来兮",
+      "artist_name": "花粥"
+    },
+    {
+      "song_id": 3400414873,
+      "heat_rank": 1,
+      "heat_score": "0.8234",
+      "comment_count": 305,
+      "like_total": 217,
+      "lifecycle_stage": "爆发期",
+      "song_name": "雨 (Intro)",
+      "artist_name": "宋冬野"
+    },
+    {
+      "song_id": 3400415789,
+      "heat_rank": 2,
+      "heat_score": "0.8125",
+      "comment_count": 205,
+      "like_total": 577,
+      "lifecycle_stage": "爆发期",
+      "song_name": "谢谢你",
+      "artist_name": "宋冬野"
+    },
+    {
+      "song_id": 1939928579,
+      "heat_rank": 1,
+      "heat_score": "0.8087",
+      "comment_count": 519,
+      "like_total": 1858,
+      "lifecycle_stage": "爆发期",
+      "song_name": "好好说话",
+      "artist_name": "马頔"
+    },
+    {
+      "song_id": 3400415792,
+      "heat_rank": 3,
+      "heat_score": "0.8068",
+      "comment_count": 172,
+      "like_total": 860,
+      "lifecycle_stage": "爆发期",
+      "song_name": "落雁",
+      "artist_name": "宋冬野"
+    },
+    {
+      "song_id": 1998952428,
+      "heat_rank": 1,
+      "heat_score": "0.7990",
+      "comment_count": 210,
+      "like_total": 326,
+      "lifecycle_stage": "爆发期",
+      "song_name": "风呀",
+      "artist_name": "枯木逢春"
+    },
+    {
+      "song_id": 3400414877,
+      "heat_rank": 4,
+      "heat_score": "0.7861",
+      "comment_count": 200,
+      "like_total": 242,
+      "lifecycle_stage": "爆发期",
+      "song_name": "郭源潮",
+      "artist_name": "宋冬野"
+    }
+  ],
+  "kmeans_clusters": [
+    {
+      "user_type": "内容消费者",
+      "user_count": 29649,
+      "pct": "19.5"
+    },
+    {
+      "user_type": "轻度用户",
+      "user_count": 120534,
+      "pct": "79.2"
+    },
+    {
+      "user_type": "核心粉丝",
+      "user_count": 1948,
+      "pct": "1.3"
+    }
+  ],
+  "rfm_dist": [
+    {
+      "rfm_label": "沉默用户",
+      "user_count": 48041
+    },
+    {
+      "rfm_label": "高价值用户",
+      "user_count": 38749
+    },
+    {
+      "rfm_label": "成长用户",
+      "user_count": 38567
+    },
+    {
+      "rfm_label": "流失风险用户",
+      "user_count": 26774
+    }
+  ],
+  "sentiment_summary": {
+    "positive_ratio": "0.7280",
+    "neutral_ratio": "0.1217",
+    "negative_ratio": "0.1503",
+    "satisfaction_score": "0.5777",
+    "total_comments": 212845,
+    "update_time": "2026-08-24 19:16:08"
+  },
+  "model_metrics": [
+    {
+      "model_name": "LogisticRegression",
+      "auc": 0.8750528541226215,
+      "auc_std": 0.09214189428521924,
+      "auc_holdout": 0.9537037037037037,
+      "pr_auc": 0.7096611721611721,
+      "f1": 0.6,
+      "accuracy": 0.8666666666666667,
+      "auc_ci_lower": 0.8977086038961039,
+      "auc_ci_upper": 1.0
+    },
+    {
+      "model_name": "RandomForest",
+      "auc": 0.882801268498943,
+      "auc_std": 0.04570807411475201,
+      "auc_holdout": 0.8858024691358025,
+      "pr_auc": 0.6051587301587301,
+      "f1": 0.5,
+      "accuracy": 0.9333333333333333,
+      "auc_ci_lower": 0.719166947439353,
+      "auc_ci_upper": 0.9915347035040432
+    },
+    {
+      "model_name": "XGBoost",
+      "auc": 0.8817653276955604,
+      "auc_std": 0.07299481555340906,
+      "auc_holdout": 0.9506172839506173,
+      "pr_auc": 0.6908730158730158,
+      "f1": 0.6,
+      "accuracy": 0.9333333333333333,
+      "auc_ci_lower": 0.870946233508299,
+      "auc_ci_upper": 1.0
+    }
+  ],
+  "churn_metrics": [
+    {
+      "model_name": "LogisticRegression",
+      "auc": 0.7097657304035725,
+      "auc_std": 0.00207202944426606,
+      "auc_holdout": 0.7079941160014482,
+      "pr_auc": 0.8950276798400958,
+      "f1": 0.7435836313071117,
+      "accuracy": 0.6464723926380368,
+      "support_pos": 36435,
+      "support_neg": 9205
+    },
+    {
+      "model_name": "RandomForest",
+      "auc": 0.76005691557853,
+      "auc_std": 0.002417877810765928,
+      "auc_holdout": 0.7530307430277531,
+      "pr_auc": 0.9133143049961034,
+      "f1": 0.8219593302139431,
+      "accuracy": 0.7348816827344434,
+      "support_pos": 36435,
+      "support_neg": 9205
+    },
+    {
+      "model_name": "XGBoost",
+      "auc": 0.7693289601391636,
+      "auc_std": 0.002107955923469355,
+      "auc_holdout": 0.7613034485005143,
+      "pr_auc": 0.9173400574996065,
+      "f1": 0.8187939414658799,
+      "accuracy": 0.7328878177037687,
+      "support_pos": 36435,
+      "support_neg": 9205
+    }
+  ],
+  "churn_risk": [
+    {
+      "risk_level": "高",
+      "user_count": 45246
+    },
+    {
+      "risk_level": "中",
+      "user_count": 81093
+    },
+    {
+      "risk_level": "低",
+      "user_count": 25792
+    }
+  ],
+  "feature_importance": [
+    {
+      "feature": "like_trend_slope",
+      "importance": 0.2231206899772392
+    },
+    {
+      "feature": "negative_ratio",
+      "importance": 0.11301275923169443
+    },
+    {
+      "feature": "valid_comment_count",
+      "importance": 0.09987842709513987
+    },
+    {
+      "feature": "days_since_release",
+      "importance": 0.09973819602342092
+    },
+    {
+      "feature": "comment_trend_slope",
+      "importance": 0.07290641804566173
+    },
+    {
+      "feature": "heat_trend_slope",
+      "importance": 0.06336416454008556
+    },
+    {
+      "feature": "comment_volatility",
+      "importance": 0.050745158139980984
+    },
+    {
+      "feature": "release_year",
+      "importance": 0.04900543900673168
+    }
+  ],
+  "hourly": [
+    {
+      "hour": 0,
+      "comment_count": 6363,
+      "user_count": 5676,
+      "pct": "0.0295"
+    },
+    {
+      "hour": 1,
+      "comment_count": 7718,
+      "user_count": 6902,
+      "pct": "0.0358"
+    },
+    {
+      "hour": 2,
+      "comment_count": 9547,
+      "user_count": 8355,
+      "pct": "0.0442"
+    },
+    {
+      "hour": 3,
+      "comment_count": 9280,
+      "user_count": 8254,
+      "pct": "0.0430"
+    },
+    {
+      "hour": 4,
+      "comment_count": 9283,
+      "user_count": 8179,
+      "pct": "0.0430"
+    },
+    {
+      "hour": 5,
+      "comment_count": 9850,
+      "user_count": 8726,
+      "pct": "0.0456"
+    },
+    {
+      "hour": 6,
+      "comment_count": 9606,
+      "user_count": 8542,
+      "pct": "0.0445"
+    },
+    {
+      "hour": 7,
+      "comment_count": 9823,
+      "user_count": 8764,
+      "pct": "0.0455"
+    },
+    {
+      "hour": 8,
+      "comment_count": 9839,
+      "user_count": 8759,
+      "pct": "0.0456"
+    },
+    {
+      "hour": 9,
+      "comment_count": 9570,
+      "user_count": 8493,
+      "pct": "0.0443"
+    },
+    {
+      "hour": 10,
+      "comment_count": 9694,
+      "user_count": 8448,
+      "pct": "0.0449"
+    },
+    {
+      "hour": 11,
+      "comment_count": 10428,
+      "user_count": 9292,
+      "pct": "0.0483"
+    },
+    {
+      "hour": 12,
+      "comment_count": 12159,
+      "user_count": 10663,
+      "pct": "0.0563"
+    },
+    {
+      "hour": 13,
+      "comment_count": 13899,
+      "user_count": 12149,
+      "pct": "0.0644"
+    },
+    {
+      "hour": 14,
+      "comment_count": 16328,
+      "user_count": 14164,
+      "pct": "0.0756"
+    },
+    {
+      "hour": 15,
+      "comment_count": 17864,
+      "user_count": 15324,
+      "pct": "0.0828"
+    },
+    {
+      "hour": 16,
+      "comment_count": 15365,
+      "user_count": 12651,
+      "pct": "0.0712"
+    },
+    {
+      "hour": 17,
+      "comment_count": 9427,
+      "user_count": 8120,
+      "pct": "0.0437"
+    },
+    {
+      "hour": 18,
+      "comment_count": 5817,
+      "user_count": 5017,
+      "pct": "0.0269"
+    },
+    {
+      "hour": 19,
+      "comment_count": 3572,
+      "user_count": 3109,
+      "pct": "0.0165"
+    },
+    {
+      "hour": 20,
+      "comment_count": 2304,
+      "user_count": 1986,
+      "pct": "0.0107"
+    },
+    {
+      "hour": 21,
+      "comment_count": 1781,
+      "user_count": 1520,
+      "pct": "0.0083"
+    },
+    {
+      "hour": 22,
+      "comment_count": 2201,
+      "user_count": 1882,
+      "pct": "0.0102"
+    },
+    {
+      "hour": 23,
+      "comment_count": 4135,
+      "user_count": 3687,
+      "pct": "0.0192"
+    }
+  ],
+  "weekday": [
+    {
+      "weekday": 0,
+      "weekday_name": "周一",
+      "comment_count": 30142,
+      "user_count": 25531,
+      "pct": "0.1396"
+    },
+    {
+      "weekday": 1,
+      "weekday_name": "周二",
+      "comment_count": 31217,
+      "user_count": 26506,
+      "pct": "0.1446"
+    },
+    {
+      "weekday": 2,
+      "weekday_name": "周三",
+      "comment_count": 31493,
+      "user_count": 26150,
+      "pct": "0.1459"
+    },
+    {
+      "weekday": 3,
+      "weekday_name": "周四",
+      "comment_count": 31383,
+      "user_count": 26431,
+      "pct": "0.1454"
+    },
+    {
+      "weekday": 4,
+      "weekday_name": "周五",
+      "comment_count": 30743,
+      "user_count": 25937,
+      "pct": "0.1424"
+    },
+    {
+      "weekday": 5,
+      "weekday_name": "周六",
+      "comment_count": 30108,
+      "user_count": 25381,
+      "pct": "0.1395"
+    },
+    {
+      "weekday": 6,
+      "weekday_name": "周日",
+      "comment_count": 30767,
+      "user_count": 26066,
+      "pct": "0.1425"
+    }
+  ],
+  "stat_tests": [
+    {
+      "test_name": "评论增长率是否显著异于0",
+      "test_type": "t_test",
+      "p_value": "0.000000",
+      "effect_size": "0.354633",
+      "conclusion": "增长率均值=0.4202, 显著(p=0.0000), 95%CI=[0.4100,0.4304]"
+    },
+    {
+      "test_name": "高热度组vs低热度组评论数差异",
+      "test_type": "mannwhitney",
+      "p_value": "0.000257",
+      "effect_size": "-0.106880",
+      "conclusion": "高热度组均值=709.4, 低热度组均值=734.5, 显著(p=0.0003)"
+    },
+    {
+      "test_name": "正面vs负面评论比例是否偏离50/50",
+      "test_type": "chi2",
+      "p_value": "0.000000",
+      "effect_size": "0.657762",
+      "conclusion": "正面=154946(82.9%), 负面=31988(17.1%), 显著偏离50/50(p=0.0000)"
+    }
+  ],
+  "ab_test": {
+    "test_name": "推送通知对评论数的影响(模拟)",
+    "metric_name": "comment_count",
+    "control_mean": "1.381523",
+    "treatment_mean": "1.490806",
+    "lift_ratio": "0.0791",
+    "p_value": "0.064559",
+    "effect_size": "0.069442",
+    "ci_lower": "-0.003766",
+    "ci_upper": "0.161972",
+    "is_significant": 0,
+    "conclusion": "实验组评论数 未显著高于 对照组 (提升 7.91%, p=0.0646, 95%CI=[-0.38%, 16.20%], Cohen d=0.0694)"
+  },
+  "cohort": [
+    {
+      "week_offset": 0,
+      "avg_retention": "100.00",
+      "cohort_count": 626
+    },
+    {
+      "week_offset": 1,
+      "avg_retention": "1.57",
+      "cohort_count": 421
+    },
+    {
+      "week_offset": 2,
+      "avg_retention": "1.25",
+      "cohort_count": 362
+    },
+    {
+      "week_offset": 3,
+      "avg_retention": "1.10",
+      "cohort_count": 347
+    },
+    {
+      "week_offset": 4,
+      "avg_retention": "1.08",
+      "cohort_count": 323
+    },
+    {
+      "week_offset": 5,
+      "avg_retention": "1.01",
+      "cohort_count": 305
+    },
+    {
+      "week_offset": 6,
+      "avg_retention": "0.94",
+      "cohort_count": 276
+    },
+    {
+      "week_offset": 7,
+      "avg_retention": "0.89",
+      "cohort_count": 271
+    },
+    {
+      "week_offset": 8,
+      "avg_retention": "0.97",
+      "cohort_count": 280
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": 0,
+      "topic_name": "主题1",
+      "keywords": "好听,多多,首歌,好好,听到,可爱,这么,人生,谢谢,兄弟"
+    },
+    {
+      "topic_id": 1,
+      "topic_name": "主题2",
+      "keywords": "流泪,开心,大笑,回来,首歌,大家,赵雷,十三,发现,努力"
+    },
+    {
+      "topic_id": 2,
+      "topic_name": "主题3",
+      "keywords": "喜欢,不是,首歌,哭哭,过去,就是,世界,民谣,歌词,十年"
+    },
+    {
+      "topic_id": 3,
+      "topic_name": "主题4",
+      "keywords": "一定,大哭,2026,生活,不要,一天,好像,哈哈哈,起来,今年"
+    },
+    {
+      "topic_id": 4,
+      "topic_name": "主题5",
+      "keywords": "我们,知道,加油,一起,还有,希望,幸福,评论,朋友,开始"
+    }
+  ],
+  "top_artists": [
+    {
+      "artist_name": "赵雷",
+      "comments": 20557,
+      "likes": "11438910",
+      "users": 15750
+    },
+    {
+      "artist_name": "花粥",
+      "comments": 23140,
+      "likes": "10747760",
+      "users": 18014
+    },
+    {
+      "artist_name": "宋冬野",
+      "comments": 20436,
+      "likes": "7033996",
+      "users": 15438
+    },
+    {
+      "artist_name": "房东的猫",
+      "comments": 23391,
+      "likes": "5926669",
+      "users": 17458
+    },
+    {
+      "artist_name": "陈鸿宇",
+      "comments": 20957,
+      "likes": "5715404",
+      "users": 15936
+    }
+  ],
+  "trend_30d": [
+    {
+      "d": "2026-07-21",
+      "c": 449
+    },
+    {
+      "d": "2026-07-22",
+      "c": 1216
+    },
+    {
+      "d": "2026-07-23",
+      "c": 579
+    },
+    {
+      "d": "2026-07-24",
+      "c": 560
+    },
+    {
+      "d": "2026-07-25",
+      "c": 512
+    },
+    {
+      "d": "2026-07-26",
+      "c": 527
+    },
+    {
+      "d": "2026-07-27",
+      "c": 733
+    },
+    {
+      "d": "2026-07-28",
+      "c": 611
+    },
+    {
+      "d": "2026-07-29",
+      "c": 854
+    },
+    {
+      "d": "2026-07-30",
+      "c": 614
+    },
+    {
+      "d": "2026-07-31",
+      "c": 535
+    },
+    {
+      "d": "2026-08-01",
+      "c": 507
+    },
+    {
+      "d": "2026-08-02",
+      "c": 432
+    },
+    {
+      "d": "2026-08-03",
+      "c": 531
+    },
+    {
+      "d": "2026-08-04",
+      "c": 573
+    },
+    {
+      "d": "2026-08-05",
+      "c": 737
+    },
+    {
+      "d": "2026-08-06",
+      "c": 670
+    },
+    {
+      "d": "2026-08-07",
+      "c": 682
+    },
+    {
+      "d": "2026-08-08",
+      "c": 599
+    },
+    {
+      "d": "2026-08-09",
+      "c": 578
+    },
+    {
+      "d": "2026-08-10",
+      "c": 676
+    },
+    {
+      "d": "2026-08-11",
+      "c": 737
+    },
+    {
+      "d": "2026-08-12",
+      "c": 657
+    },
+    {
+      "d": "2026-08-13",
+      "c": 652
+    },
+    {
+      "d": "2026-08-14",
+      "c": 664
+    },
+    {
+      "d": "2026-08-15",
+      "c": 674
+    },
+    {
+      "d": "2026-08-16",
+      "c": 710
+    },
+    {
+      "d": "2026-08-17",
+      "c": 720
+    },
+    {
+      "d": "2026-08-18",
+      "c": 726
+    },
+    {
+      "d": "2026-08-19",
+      "c": 365
+    },
+    {
+      "d": "2026-08-20",
+      "c": 8
+    }
+  ],
+  "song_sentiment_avg": {
+    "pos_pct": "73.5",
+    "neg_pct": "14.7",
+    "neu_pct": "11.8",
+    "sat_score": "0.59"
+  },
+  "user_value_dist": [
+    {
+      "value_level": "low",
+      "cnt": 152122
+    },
+    {
+      "value_level": "medium",
+      "cnt": 9
+    }
+  ],
+  "lifecycle_stages": [
+    {
+      "lifecycle_stage": "增长期",
+      "cnt": 342
+    },
+    {
+      "lifecycle_stage": "爆发期",
+      "cnt": 31416
+    },
+    {
+      "lifecycle_stage": "稳定期",
+      "cnt": 46259
+    },
+    {
+      "lifecycle_stage": "衰退期",
+      "cnt": 23849
+    }
+  ]
+}

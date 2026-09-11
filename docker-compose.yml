@@ -1,0 +1,48 @@
+# 音乐评论用户行为分析 - 一键启动 Dashboard + MySQL
+# 改进点：docker-compose 编排，无需本地手动装 MySQL / Python 环境
+#
+# 启动：docker-compose up -d
+# 访问：http://localhost:8501
+# 停止：docker-compose down
+# 重置数据库：docker-compose down -v   （会清空 MySQL 数据卷）
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: music-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-changeme}
+      MYSQL_DATABASE: ${DB_NAME:-music_analysis}
+      TZ: Asia/Shanghai
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD:-changeme}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  dashboard:
+    build: .
+    container_name: music-dashboard
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD:-changeme}
+      DB_NAME: ${DB_NAME:-music_analysis}
+    ports:
+      - "8501:8501"
+
+volumes:
+  mysql-data:
